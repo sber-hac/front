@@ -41,6 +41,23 @@ export class RtcService {
             );
     }
 
+    public startAudio(): Observable<void> {
+        const constraints = {
+            audio: true,
+            video: false,
+        };
+
+        return from(navigator.mediaDevices.getUserMedia(constraints))
+            .pipe(
+                tap((stream) => {
+                    stream.getTracks().forEach((track) => {
+                        this._pc.addTrack(track, stream);
+                    });
+                }),
+                switchMap(() => this.negotiate())
+            );
+    }
+
     private negotiate(): Observable<void> {
         return from(this._pc.createOffer())
             .pipe(
