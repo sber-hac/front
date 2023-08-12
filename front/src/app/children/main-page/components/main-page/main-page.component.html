@@ -1,5 +1,5 @@
 <ion-content class="ion-padding">
-    <div *ngIf="currentBreakPoint !== 1">
+    <div [ngStyle]="{'display' :  currentBreakPoint === 1 ? 'none': 'block' }">
         <video id="video" [ngStyle]="{ height: '100vh', width: '100vw' }"
                autoplay="true" playsinline="true"
                [srcObject]="rtcService.videoStream$ | async"

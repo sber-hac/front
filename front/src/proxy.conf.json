@@ -1,6 +1,11 @@
 {
   "/offer": {
-    "target": "https://localhost:8080",
+    "target": "http://localhost:8080",
     "secure": false
+  },
+  "/ws/result": {
+    "target": "http://localhost:8081/ws/result",
+    "secure": false,
+    "ws": true
   }
 }

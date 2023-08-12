@@ -1,7 +1,10 @@
 import { ChangeDetectionStrategy, Component, HostBinding, Input } from '@angular/core';
 import { ModalBreakpointEnum } from '../../models/modal-breakpoint.enum';
 import { IonModal } from '@ionic/angular';
-import { animate, state, style, transition, trigger } from '@angular/animations';
+import { animate, style, transition, trigger } from '@angular/animations';
+import { WebsocketService } from '../../../../services/websocket/websocket.service';
+import { BehaviorSubject, distinctUntilChanged, filter, scan, takeUntil } from 'rxjs';
+import { DestroyService } from '../../../../services/destroy/destroy.service';
 
 @Component({
     selector: 'app-swipe-modal',
@@ -15,6 +18,9 @@ import { animate, state, style, transition, trigger } from '@angular/animations'
                 animate('100ms', style({ opacity: 1, transform: 'translateY(0)' })),
             ]),
         ]),
+    ],
+    providers: [
+        WebsocketService
     ]
 })
 export class TranslateModalComponent {
@@ -40,6 +46,23 @@ export class TranslateModalComponent {
 
     @Input()
     public minimalBreakPoint: number = 0.3;
+
+    protected text$: BehaviorSubject<string> = new BehaviorSubject('');
+
+    constructor(
+        protected destroy$: DestroyService,
+        protected websocket$: WebsocketService,
+    ) {
+        const obs = this.text$;
+        this.websocket$
+            .pipe(
+                filter((text: string) => !!text && text !== 'нет жеста'),
+                distinctUntilChanged(),
+                scan((a, c) => a + " " + c),
+                takeUntil(this.destroy$),
+            ).subscribe(obs);
+    }
+
 
     public onCrossClick(): void {
         this.modal?.setCurrentBreakpoint(this.minimalBreakPoint);

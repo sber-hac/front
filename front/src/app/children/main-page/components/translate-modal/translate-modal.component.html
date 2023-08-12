@@ -2,10 +2,9 @@
     <div class="translate-modal__container-">
         <div class="translate-modal__text-container" #host>
             <span class="translate-modal__text">
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Assumenda corporis dolor eligendi facere fuga harum magni nostrum quis ut voluptatum.
+                {{ text$ | async }}
             </span>
         </div>
-        
         <div class="translate-modal__icon-container">
             <div>
                 <img src="assets/icon/volume-up.svg">
@@ -29,13 +28,12 @@
             </div>
             <div class="translate-modal-full__bottom">
                 <span class="translate-modal-full__text">
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Assumenda corporis dolor eligendi facere fuga harum magni nostrum quis ut voluptatum.
+                    {{ text$ | async }}
                 </span>
                 <div class="translate-modal-full__microphone">
                     <img src="assets/icon/microphone.svg">
                 </div>
             </div>
-        
         </div>
     </div>
 </div>

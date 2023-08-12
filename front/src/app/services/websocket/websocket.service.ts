@@ -9,7 +9,7 @@ export class WebsocketService extends WebSocketSubject<any> {
     constructor(
         @Inject(WEBSOCKET_CONFIG) protected config: IWebsocketConfig
     ) {
-        super(config.urlConfig);
+        super(config);
         /** чтобы приходил тестовый вебсокет дата */
         this.next({
             event: 'bts:subscribe',
