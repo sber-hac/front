@@ -25,6 +25,7 @@ export class MainPageComponent implements AfterViewInit {
             canDismiss: false,
             breakpoints: [0, 0.30, 1],
             initialBreakpoint: 0.30,
+            cssClass: 'translate-modal',
         }))
             .pipe(
                 switchMap((value: HTMLIonModalElement) => from(value.present())),
@@ -47,8 +48,8 @@ export class MainPageComponent implements AfterViewInit {
     }
 
     public ngAfterViewInit(): void {
-        this.rtcService.start()
-            .pipe(take(1))
-            .subscribe();
+        // this.rtcService.start()
+        //     .pipe(take(1))
+        //     .subscribe();
     }
 }

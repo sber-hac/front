@@ -3,7 +3,19 @@
 .translate-modal {
   display: flex;
   flex-direction: column;
-  margin: 80px;
+  margin: styles.$spacing-4xl;
+
+  &__text-container {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+  }
+
+  &__icon-container {
+    align-self: end;
+    display: grid;
+    grid-template-columns: 83% auto auto;
+  }
 
   &__text {
     font-size: 24px;
@@ -12,11 +24,7 @@
   }
 
   &__btn {
-    align-self: end;
-    margin-top: 16px;
-    font-size: 20px;
-    line-height: 30px;
-    letter-spacing: 0;
+    align-self: start;
     color: styles.$primary;
   }
 }
