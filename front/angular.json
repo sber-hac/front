@@ -129,6 +129,9 @@
               "browserTarget": "front:build:development"
             }
           },
+          "options": {
+            "proxyConfig": "src/proxy.conf.json"
+          },
           "defaultConfiguration": "development"
         },
         "extract-i18n": {
@@ -186,5 +189,8 @@
         }
       }
     }
+  },
+  "cli": {
+    "analytics": "4cafc7cf-4a29-4ead-a811-399a1019d867"
   }
 }

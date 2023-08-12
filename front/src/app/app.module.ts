@@ -3,6 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { IonicModule } from '@ionic/angular';
 import { AppComponent } from './components/app/app.component';
 import { RouterModule, Routes } from '@angular/router';
+import { HttpClientModule } from '@angular/common/http';
 
 const routes: Routes = [
     {
@@ -20,6 +21,7 @@ const routes: Routes = [
         BrowserModule,
         RouterModule.forRoot(routes),
         IonicModule.forRoot(),
+        HttpClientModule
     ],
     providers: [],
     bootstrap: [AppComponent]

@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
+import { AfterViewInit, Component } from '@angular/core';
 import { WebsocketService } from '../../../services/websocket/websocket.service';
 import { DestroyService } from '../../../services/destroy/destroy.service';
-import { takeUntil } from 'rxjs';
+import { take, takeUntil } from 'rxjs';
+import { RtcService } from '../services/rtc.service';
 
 @Component({
     selector: 'app-main-page',
@@ -11,10 +12,11 @@ import { takeUntil } from 'rxjs';
         DestroyService
     ]
 })
-export class MainPageComponent {
+export class MainPageComponent implements AfterViewInit {
     constructor(
         protected destroy$: DestroyService,
         protected websocket$: WebsocketService,
+        protected readonly rtcService: RtcService
     ) {
         this.websocket$
             .pipe(
@@ -22,4 +24,10 @@ export class MainPageComponent {
             )
             .subscribe(console.log);
     }
+
+  public ngAfterViewInit(): void {
+    this.rtcService.start()
+        .pipe(take(1))
+        .subscribe();
+  }
 }
