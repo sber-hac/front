@@ -4,6 +4,7 @@ import { IonicModule } from '@ionic/angular';
 import { AppComponent } from './components/app/app.component';
 import { RouterModule, Routes } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
+import { AbLetModule } from './directives/let/let.module';
 
 const routes: Routes = [
     {
@@ -21,7 +22,8 @@ const routes: Routes = [
         BrowserModule,
         RouterModule.forRoot(routes),
         IonicModule.forRoot(),
-        HttpClientModule
+        HttpClientModule,
+        AbLetModule
     ],
     providers: [],
     bootstrap: [AppComponent]
