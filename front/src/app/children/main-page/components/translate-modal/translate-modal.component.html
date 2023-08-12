@@ -1,15 +1,15 @@
 <div>
     <div class="translate-modal">
         <div class="translate-modal__container-">
-            <div class="translate-modal__text-container">
-                <span class="translate-modal__text">
-                    {{'Повседневная практика показывает, что постоянный количественный рост ...'}}
+            <div class="translate-modal__text-container" #host>
+                <span class="translate-modal__text" fittext [container]="host" [maxFontSize]="64">
+                    {{'Повседневная ...'}}
                 </span>
                 <div *ngIf="isFullScreen">
                     <img src="assets/icon/cross.svg">
                 </div>
             </div>
-            
+
             <div class="translate-modal__icon-container">
                 <div *ngIf="!isFullScreen">
                     <img src="assets/icon/volume-up.svg">
