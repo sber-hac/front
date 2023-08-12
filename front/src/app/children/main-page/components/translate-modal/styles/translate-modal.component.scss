@@ -12,6 +12,8 @@
 
     &__text-container {
         height: 15vh;
+        display: flex;
+        flex-direction: column;
     }
 
     &__text {
@@ -35,6 +37,49 @@
     &__btn {
         &:not(:last-child) {
             margin-right: $spacing-xl;
+        }
+    }
+}
+
+.text-container {
+    &__cross {
+        display: flex;
+        flex-direction: row-reverse;
+    }
+}
+
+
+.translate-modal-full {
+    display: flex;
+    flex-direction: column;
+    margin: $spacing-4xl $spacing-xl;
+
+    &__text {
+        font-size: 24px;
+        line-height: 30px;
+        letter-spacing: 0;
+        height: 60vh;
+        margin-top: 32px;
+    }
+
+    &__text-container {
+        display: flex;
+        flex-direction: column;
+    }
+
+    &__text-container {
+        padding: 10px;
+    }
+
+    &__bottom {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    &__microphone {
+        & img {
+            width: 64px;
         }
     }
 }

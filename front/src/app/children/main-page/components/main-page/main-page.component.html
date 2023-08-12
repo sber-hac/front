@@ -14,7 +14,11 @@
         [canDismiss]="false"
     >
         <ng-template>
-            <app-swipe-modal [modalBreakPoint]="currentBreakPoint"></app-swipe-modal>
+            <app-swipe-modal
+                [modalBreakPoint]="currentBreakPoint"
+                [modal]="modal"
+            >
+            </app-swipe-modal>
         </ng-template>
     </ion-modal>
 </ion-content>

@@ -1,5 +1,6 @@
 import { Component, HostBinding, Input } from '@angular/core';
 import { ModalBreakpointEnum } from '../../models/modal-breakpoint.enum';
+import { IonModal } from '@ionic/angular';
 
 @Component({
     selector: 'app-swipe-modal',
@@ -18,7 +19,23 @@ export class TranslateModalComponent {
         this.isFullScreen = value === ModalBreakpointEnum.full;
     }
 
+    @Input()
+    public modal?: IonModal;
+
     @HostBinding('attr.is-full-size')
     public isFullScreen: boolean = false;
 
+    @Input()
+    public maxBreakPoint: number = 1;
+
+    @Input()
+    public minimalBreakPoint: number = 0.3;
+
+    public onCrossClick(): void {
+        this.modal?.setCurrentBreakpoint(this.minimalBreakPoint);
+    }
+
+    public onFullScreenClick(): void {
+        this.modal?.setCurrentBreakpoint(this.maxBreakPoint);
+    }
 }
