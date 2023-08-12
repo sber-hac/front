@@ -86,14 +86,13 @@
               {
                 "input": "node_modules/@ionic/angular/css/flex-utils.css"
               },
-              {
-                "input": "src/theme/variables.css"
-              },
-              "src/global_styles/global.master.scss"
+              "src/global_styles/global.master.scss",
+              "src/theme/variables.scss"
             ],
             "stylePreprocessorOptions": {
               "includePaths": [
-                "src/global_styles/"
+                "src/global_styles/",
+                "src/theme/"
               ]
             },
             "scripts": []

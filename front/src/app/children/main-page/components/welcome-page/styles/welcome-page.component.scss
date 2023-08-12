@@ -1,0 +1,32 @@
+@use 'global.master' as *;
+
+
+.welcome-page {
+  position: relative;
+  overflow: hidden;
+  user-select: none;
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  &__wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    cursor: pointer;
+  }
+
+  &__img {
+    margin-bottom: 50px;
+  }
+
+  &__btn {
+    color: $primary-text;
+  }
+
+  &__ripple {
+    color: rgba($primary-text, 0.5);
+  }
+}
