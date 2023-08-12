@@ -15,15 +15,6 @@ import { animate, state, style, transition, trigger } from '@angular/animations'
                 animate('100ms', style({ opacity: 1, transform: 'translateY(0)' })),
             ]),
         ]),
-        trigger('disapire', [
-            transition(':enter', [
-                style({ opacity: 0}),
-                animate('100ms', style({opacity: 1}))
-            ]),
-            transition(':leave', [
-                animate('100ms', style({ opacity: 0})),
-            ]),
-        ])
     ]
 })
 export class TranslateModalComponent {
