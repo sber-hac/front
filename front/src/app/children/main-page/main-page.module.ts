@@ -8,6 +8,7 @@ import { WelcomePageComponent } from './components/welcome-page/welcome-page.com
 import { MODAL_BREAKPOINT } from './tokens/modal-breackpoint.token';
 import { BehaviorSubject } from 'rxjs';
 import { ModalBreakpointEnum } from './models/modal-breakpoint.enum';
+import { ResizeTextModule } from '../../directives/resize-text-module';
 
 const routes: Routes = [
     {
@@ -39,6 +40,7 @@ const routes: Routes = [
         CommonModule,
         RouterModule.forChild(routes),
         IonicModule,
+        ResizeTextModule,
     ],
     providers: [
         {

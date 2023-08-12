@@ -4,6 +4,7 @@ import { IonicModule } from '@ionic/angular';
 import { AppComponent } from './components/app/app.component';
 import { RouterModule, Routes } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
+import { AngularFittextDirective } from './directives/resize-text.directive';
 
 const routes: Routes = [
     {
