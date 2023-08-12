@@ -11,10 +11,10 @@
             </div>
 
             <div class="translate-modal__icon-container">
-                <div class="translate-modal__btn" *ngIf="(currentBreakpoint$ | async)">
+                <div class="translate-modal__btn" *ngIf="!(isFullscreen$ | async)">
                     <img src="assets/icon/volume-up.svg">
                 </div>
-                <div class="translate-modal__btn">
+                <div class="translate-modal__btn" *ngIf="!(isFullscreen$ | async)">
                     <img src="assets/icon/full-screen.svg">
                 </div>
                 <div class="translate-modal__btn">
