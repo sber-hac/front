@@ -7,7 +7,6 @@ import { WebsocketService } from '../../../../services/websocket/websocket.servi
 import { DestroyService } from '../../../../services/destroy/destroy.service';
 
 @Component({
-    selector: 'app-root',
     templateUrl: './main-page.component.html',
     providers: [
         DestroyService,
