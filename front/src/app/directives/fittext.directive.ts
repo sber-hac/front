@@ -12,6 +12,9 @@ export class FittextDirective implements AfterViewChecked, AfterViewInit, OnDest
     @Input()
     public maxFontSize!: number;
 
+    @Input()
+    public minFontSize!: number;
+
     @HostBinding('style.width')
     protected readonly width: string = 'fit-content';
 
@@ -42,12 +45,20 @@ export class FittextDirective implements AfterViewChecked, AfterViewInit, OnDest
      * установка стилей
      */
     protected setFontSize(): void {
-        const contentWidth: number = this.el.nativeElement.scrollWidth;
-        const containerwidth: number = this.container.offsetWidth;
-        const diff: number = contentWidth / containerwidth;
-        if (diff !== 0) {
-            this.fontSize = `${Math.min(((this.fontSize ? parseFloat(this.fontSize) : this.maxFontSize) / diff), this.maxFontSize)}px`;
+        const innerText: number = this.el.nativeElement.textContent?.length ?? 0;
+        const symbolCount: number = this.container.offsetWidth / this.maxFontSize;
+        const diff: number = innerText / symbolCount;
+        if (diff !== 0 && !!symbolCount) {
+            let size: number = this.fontSize ? parseFloat(this.fontSize) : this.maxFontSize / diff;
+            if (size > this.maxFontSize) {
+                size = this.maxFontSize;
+            } else if (size < this.minFontSize) {
+                size = this.minFontSize;
+            }
+            this.fontSize = `${size}px`;
+            const lineHeight = `${size + 4} px`
             this.render2.setStyle(this.el.nativeElement, 'fontSize', this.fontSize);
+            this.render2.setStyle(this.el.nativeElement, 'lineHeight', lineHeight);
         } else {
             this.render2.setStyle(this.el.nativeElement, 'fontSize', this.maxFontSize);
         }
