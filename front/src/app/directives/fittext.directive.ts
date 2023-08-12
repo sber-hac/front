@@ -56,9 +56,9 @@ export class FittextDirective implements AfterViewChecked, AfterViewInit, OnDest
                 size = this.minFontSize;
             }
             this.fontSize = `${size}px`;
-            const lineHeight = `${size + 4} px`
+            const lineHeight = `${size * 1.25}px`
             this.render2.setStyle(this.el.nativeElement, 'fontSize', this.fontSize);
-            this.render2.setStyle(this.el.nativeElement, 'lineHeight', lineHeight);
+            this.render2.setStyle(this.el.nativeElement, 'line-height', lineHeight);
         } else {
             this.render2.setStyle(this.el.nativeElement, 'fontSize', this.maxFontSize);
         }
