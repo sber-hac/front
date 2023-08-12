@@ -2,7 +2,6 @@
        autoplay="true" playsinline="true"
        [srcObject]="rtcService.videoStream$ | async"
 >
-
 </video>
 
 <ion-content class="ion-padding">
@@ -15,7 +14,7 @@
         [canDismiss]="false"
     >
         <ng-template>
-            <app-swipe-modal></app-swipe-modal>
+            <app-swipe-modal [modalBreakPoint]="currentBreakPoint"></app-swipe-modal>
         </ng-template>
     </ion-modal>
 </ion-content>

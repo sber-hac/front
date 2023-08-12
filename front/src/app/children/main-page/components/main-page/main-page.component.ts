@@ -22,6 +22,8 @@ export class MainPageComponent implements AfterViewInit, OnDestroy {
 
     protected isModalOpen: boolean = true;
 
+    protected currentBreakPoint?: ModalBreakpointEnum;
+
     constructor(
         protected destroy$: DestroyService,
         protected websocket$: WebsocketService,
@@ -36,7 +38,7 @@ export class MainPageComponent implements AfterViewInit, OnDestroy {
     }
 
     public checkBreakpoint(event: any): void {
-        this.currentBreakpoint$.next(event.detail.breakpoint);
+        this.currentBreakPoint = event.detail.breakpoint;
     }
 
     public ngOnDestroy(): void {

@@ -1,24 +1,26 @@
 <div>
     <div class="translate-modal">
-        <div class="translate-modal__container">
+        <div class="translate-modal__container-">
             <div class="translate-modal__text-container">
-                <div class="translate-modal__text">
-                    Повседневная практика показывает, что постоянный количественный рост ...
-                </div>
-                <div class="translate-modal__btn">
+                <span class="translate-modal__text">
+                    {{'Повседневная практика показывает, что постоянный количественный рост ...'}}
+                </span>
+                <div *ngIf="isFullScreen">
                     <img src="assets/icon/cross.svg">
                 </div>
             </div>
-
+            
             <div class="translate-modal__icon-container">
-                <div class="translate-modal__btn" *ngIf="!(isFullscreen$ | async)">
+                <div *ngIf="!isFullScreen">
                     <img src="assets/icon/volume-up.svg">
                 </div>
-                <div class="translate-modal__btn" *ngIf="!(isFullscreen$ | async)">
-                    <img src="assets/icon/full-screen.svg">
-                </div>
-                <div class="translate-modal__btn">
-                    <img src="assets/icon/microphone.svg">
+                <div class="translate-modal__btn-right">
+                    <div class="btn-right__btn" *ngIf="!isFullScreen">
+                        <img src="assets/icon/full-screen.svg">
+                    </div>
+                    <div class="btn-right__btn">
+                        <img src="assets/icon/microphone.svg">
+                    </div>
                 </div>
             </div>
         </div>

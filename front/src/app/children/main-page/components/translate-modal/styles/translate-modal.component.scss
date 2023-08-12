@@ -1,34 +1,40 @@
-@use 'global.master' as styles;
+@use 'global.master' as *;
+
 
 .translate-modal {
-  display: flex;
-  flex-direction: column;
-  margin: styles.$spacing-4xl;
-
-  &__text-container {
     display: flex;
-    flex-direction: row;
-    align-items: flex-start;
-  }
+    flex-direction: column;
+    margin: $spacing-4xl $spacing-xl;
 
-  &__icon-container {
-    align-self: end;
-    display: grid;
-    grid-template-columns: 83% auto auto;
-
-    &_isHide {
-      display: none;
+    &__icon-container {
+        display: flex;
     }
-  }
 
-  &__text {
-    font-size: 24px;
-    line-height: 30px;
-    letter-spacing: 0;
-  }
+    &__text-container {
+        height: 15vh;
+    }
 
-  &__btn {
-    align-self: start;
-    color: styles.$primary;
-  }
+    &__text {
+        font-size: 24px;
+        line-height: 30px;
+        letter-spacing: 0;
+    }
+
+    &__icon-container {
+        display: flex;
+        justify-content: space-between;
+        margin-top: $spacing-2xl;
+    }
+
+    &__btn-right {
+        display: flex;
+    }
+}
+
+.btn-right {
+    &__btn {
+        &:not(:last-child) {
+            margin-right: $spacing-xl;
+        }
+    }
 }
