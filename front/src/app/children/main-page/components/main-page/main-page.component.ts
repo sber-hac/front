@@ -9,6 +9,7 @@ import { ModalBreakpointEnum } from '../../models/modal-breakpoint.enum';
 
 @Component({
     templateUrl: './main-page.component.html',
+    styleUrls: ['./styles/main-page.component.scss'],
     providers: [
         DestroyService,
         WebsocketService
@@ -20,8 +21,6 @@ export class MainPageComponent implements AfterViewInit, OnDestroy {
     protected modal?: IonModal;
 
     protected isModalOpen: boolean = true;
-
-    protected canDismiss: boolean = false;
 
     constructor(
         protected destroy$: DestroyService,

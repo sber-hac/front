@@ -1,13 +1,12 @@
 @use 'global.master' as styles;
 
 .main-page {
-
-  &__layout {
-    height: 100%;
-    width: 100%;
-  }
+    &__layout {
+        height: 100%;
+        width: 100%;
+    }
 }
 
 .translate-modal {
-  --width: 80% !important;
+    --width: 80% !important;
 }
