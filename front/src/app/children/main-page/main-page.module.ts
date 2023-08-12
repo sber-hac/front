@@ -5,6 +5,9 @@ import { CommonModule } from '@angular/common';
 import { TranslateModalComponent } from './components/translate-modal/translate-modal.component';
 import { IonicModule } from '@ionic/angular';
 import { WelcomePageComponent } from './components/welcome-page/welcome-page.component';
+import { MODAL_BREAKPOINT } from './tokens/modal-breackpoint.token';
+import { BehaviorSubject } from 'rxjs';
+import { ModalBreakpointEnum } from './models/modal-breakpoint.enum';
 
 const routes: Routes = [
     {
@@ -37,6 +40,12 @@ const routes: Routes = [
         RouterModule.forChild(routes),
         IonicModule,
     ],
+    providers: [
+        {
+            provide: MODAL_BREAKPOINT,
+            useValue: new BehaviorSubject<ModalBreakpointEnum>(ModalBreakpointEnum.small)
+        }
+    ]
 })
 export class MainPageModule {
 }

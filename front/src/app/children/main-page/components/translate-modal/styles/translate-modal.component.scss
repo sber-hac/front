@@ -15,6 +15,10 @@
     align-self: end;
     display: grid;
     grid-template-columns: 83% auto auto;
+
+    &_isHide {
+      display: none;
+    }
   }
 
   &__text {

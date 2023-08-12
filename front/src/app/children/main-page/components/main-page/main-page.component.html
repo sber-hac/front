@@ -6,7 +6,7 @@
 </video>
 
 <ion-content class="ion-padding">
-    <ion-modal [isOpen]="isModalOpen" [initialBreakpoint]="0.3" [breakpoints]="[0.3, 1]" [canDismiss]="canDismiss">
+    <ion-modal (ionBreakpointDidChange)="checkBreakpoint($event)" [isOpen]="isModalOpen" [initialBreakpoint]="0.3" [breakpoints]="[0.3, 1]" [canDismiss]="canDismiss">
         <ng-template>
             <app-swipe-modal></app-swipe-modal>
         </ng-template>
