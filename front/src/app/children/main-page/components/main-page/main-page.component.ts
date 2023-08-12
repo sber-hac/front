@@ -1,6 +1,6 @@
-import { AfterViewInit, Component, HostListener } from '@angular/core';
+import { AfterViewInit, Component, HostListener, OnDestroy } from '@angular/core';
 import { ModalController } from '@ionic/angular';
-import { from, switchMap, take, takeUntil } from 'rxjs';
+import { from, switchMap, takeUntil } from 'rxjs';
 import { TranslateModalComponent } from '../translate-modal/translate-modal.component';
 import { RtcService } from '../../services/rtc.service';
 import { WebsocketService } from '../../../../services/websocket/websocket.service';
@@ -13,7 +13,7 @@ import { DestroyService } from '../../../../services/destroy/destroy.service';
         WebsocketService
     ]
 })
-export class MainPageComponent implements AfterViewInit {
+export class MainPageComponent implements AfterViewInit, OnDestroy {
 
     @HostListener('click')
     protected openModal(): void {
@@ -21,14 +21,16 @@ export class MainPageComponent implements AfterViewInit {
             component: TranslateModalComponent,
             mode: 'ios',
             animated: true,
-            canDismiss: false,
+            canDismiss: (data?: any, role?: string) => {
+                return new Promise<boolean>(resolve => resolve(role === "close"))
+            },
             breakpoints: [0, 0.30, 1],
             initialBreakpoint: 0.30,
             cssClass: 'translate-modal',
         }))
             .pipe(
                 switchMap((value: HTMLIonModalElement) => from(value.present())),
-                takeUntil(this.destroy$),
+                takeUntil(this.destroy$)
             )
             .subscribe();
     }
@@ -44,6 +46,10 @@ export class MainPageComponent implements AfterViewInit {
                 takeUntil(this.destroy$)
             )
             .subscribe(console.log);
+    }
+
+    public ngOnDestroy(): void {
+        this.modalController.dismiss(undefined, "close");
     }
 
     public ngAfterViewInit(): void {
