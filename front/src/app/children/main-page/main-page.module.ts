@@ -9,6 +9,7 @@ import { MODAL_BREAKPOINT } from './tokens/modal-breackpoint.token';
 import { BehaviorSubject } from 'rxjs';
 import { ModalBreakpointEnum } from './models/modal-breakpoint.enum';
 import { FittextDirective } from '../../directives/fittext.directive';
+import { LoaderComponent } from '../../components/loader/loader.component';
 
 const routes: Routes = [
     {
@@ -41,6 +42,7 @@ const routes: Routes = [
         RouterModule.forChild(routes),
         IonicModule,
         FittextDirective,
+        LoaderComponent
     ],
     providers: [
         {

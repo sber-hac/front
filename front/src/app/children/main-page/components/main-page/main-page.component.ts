@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, Inject, OnDestroy, ViewChild } from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, Component, Inject, OnDestroy, ViewChild } from '@angular/core';
 import { BehaviorSubject, takeUntil } from 'rxjs';
 import { RtcService } from '../../services/rtc.service';
 import { WebsocketService } from '../../../../services/websocket/websocket.service';
@@ -13,7 +13,8 @@ import { ModalBreakpointEnum } from '../../models/modal-breakpoint.enum';
     providers: [
         DestroyService,
         WebsocketService
-    ]
+    ],
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class MainPageComponent implements AfterViewInit, OnDestroy {
 
