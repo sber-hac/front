@@ -9,6 +9,7 @@
         class="translate-modal"
         (ionBreakpointDidChange)="checkBreakpoint($event)"
         [isOpen]="isModalOpen"
+        [mode]="'ios'"
         [initialBreakpoint]="0.3"
         [breakpoints]="[0.3, 1]"
         [canDismiss]="false"
