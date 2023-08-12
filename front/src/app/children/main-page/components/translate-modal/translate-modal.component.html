@@ -1,4 +1,4 @@
-<div class="translate-modal" *ngIf="!isFullScreen">
+<div class="translate-modal" *ngIf="!isFullScreen" @fadeSlideInOut>
     <div class="translate-modal__container-">
         <div class="translate-modal__text-container" #host>
             <span class="translate-modal__text">
@@ -21,7 +21,7 @@
         </div>
     </div>
 </div>
-<div class="translate-modal-full" *ngIf="isFullScreen">
+<div class="translate-modal-full" *ngIf="isFullScreen" @fadeSlideInOut>
     <div class="translate-modal-full__container">
         <div class="translate-modal-full__text-container" #host>
             <div class="text-container__cross" (click)="onCrossClick()">

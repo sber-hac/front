@@ -1,12 +1,30 @@
 import { ChangeDetectionStrategy, Component, HostBinding, Input } from '@angular/core';
 import { ModalBreakpointEnum } from '../../models/modal-breakpoint.enum';
 import { IonModal } from '@ionic/angular';
+import { animate, state, style, transition, trigger } from '@angular/animations';
 
 @Component({
     selector: 'app-swipe-modal',
     templateUrl: './translate-modal.component.html',
     styleUrls: ['./styles/translate-modal.component.scss'],
-    changeDetection: ChangeDetectionStrategy.OnPush
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    animations: [
+        trigger('fadeSlideInOut', [
+            transition(':enter', [
+                style({ opacity: 0, transform: 'translateY(10px)' }),
+                animate('100ms', style({ opacity: 1, transform: 'translateY(0)' })),
+            ]),
+        ]),
+        trigger('disapire', [
+            transition(':enter', [
+                style({ opacity: 0}),
+                animate('100ms', style({opacity: 1}))
+            ]),
+            transition(':leave', [
+                animate('100ms', style({ opacity: 0})),
+            ]),
+        ])
+    ]
 })
 export class TranslateModalComponent {
 
