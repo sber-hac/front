@@ -1,0 +1,9 @@
+@use 'global.master' as styles;
+
+.main-page {
+
+  &__layout {
+    height: 100%;
+    width: 100%;
+  }
+}

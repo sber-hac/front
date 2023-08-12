@@ -1,0 +1,254 @@
+@use "font-vars" as font-vars;
+
+@mixin P6-bold {
+  font-family: font-vars.$bold;
+  font-size: 6px;
+  line-height: 18px;
+  letter-spacing: 0;
+}
+
+@mixin P8-bold {
+  font-family: font-vars.$bold;
+  font-size: 8px;
+  line-height: 18px;
+  letter-spacing: 0;
+}
+
+@mixin P10 {
+  font-family: font-vars.$regular;
+  font-size: 10px;
+  line-height: 18px;
+  letter-spacing: 0;
+}
+
+@mixin P10-medium {
+  font-family: font-vars.$medium;
+  font-size: 10px;
+  line-height: 18px;
+  letter-spacing: 0;
+}
+
+@mixin P10-semibold {
+  font-family: font-vars.$semi;
+  font-size: 10px;
+  line-height: 18px;
+  letter-spacing: 0;
+}
+
+@mixin P12 {
+  font-family: font-vars.$regular;
+  font-size: 12px;
+  line-height: 18px;
+  letter-spacing: 0;
+}
+
+@mixin P12-medium {
+  font-family: font-vars.$medium;
+  font-size: 12px;
+  line-height: 18px;
+  letter-spacing: 0;
+}
+
+@mixin P12-bold {
+  font-family: font-vars.$bold;
+  font-size: 12px;
+  line-height: 20px;
+  letter-spacing: 0;
+}
+
+@mixin P12-semibold {
+  font-family: font-vars.$semi;
+  font-size: 12px;
+  line-height: 20px;
+  letter-spacing: 0;
+}
+
+@mixin P12-bold-upper {
+  font-family: font-vars.$bold;
+  font-size: 12px;
+  line-height: 24px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+@mixin P13 {
+  font-family: font-vars.$regular;
+  font-size: 13px;
+  line-height: 18px;
+  letter-spacing: 0;
+}
+
+@mixin P13-medium {
+  font-family: font-vars.$medium;
+  font-size: 13px;
+  line-height: 18px;
+  letter-spacing: 0;
+}
+
+@mixin P14 {
+  font-family: font-vars.$regular;
+  font-size: 14px;
+  line-height: 22px;
+  letter-spacing: 0;
+}
+
+@mixin P14-medium {
+  font-family: font-vars.$medium;
+  font-size: 14px;
+  line-height: 20px;
+  letter-spacing: 0;
+}
+
+@mixin P14-semibold {
+  font-family: font-vars.$semi;
+  font-size: 14px;
+  line-height: 20px;
+  letter-spacing: 0;
+}
+
+@mixin P14-bold {
+  font-family: font-vars.$bold;
+  font-size: 14px;
+  line-height: 20px;
+  letter-spacing: 0;
+}
+
+@mixin P15-bold {
+  font-family: font-vars.$bold;
+  font-size: 15px;
+  line-height: 25px;
+  letter-spacing: 0;
+}
+
+@mixin P14-black {
+  font-family: font-vars.$black;
+  font-size: 14px;
+  line-height: 20px;
+  letter-spacing: 0;
+}
+
+@mixin P16 {
+  font-family: font-vars.$regular;
+  font-size: 16px;
+  line-height: 24px;
+  letter-spacing: 0;
+}
+
+@mixin P16-medium {
+  font-family: font-vars.$medium;
+  font-size: 16px;
+  line-height: 24px;
+  letter-spacing: 0;
+}
+
+@mixin P16-semibold {
+  font-family: font-vars.$semi;
+  font-size: 16px;
+  line-height: 24px;
+  letter-spacing: 0;
+}
+
+@mixin P16-bold {
+  font-family: font-vars.$bold;
+  font-size: 16px;
+  line-height: 24px;
+  letter-spacing: 0;
+}
+
+@mixin P16-extrabold {
+  font-family: font-vars.$extra-bold;
+  font-size: 16px;
+  line-height: 24px;
+  letter-spacing: 0;
+}
+
+@mixin P18 {
+  font-family: font-vars.$regular;
+  font-size: 18px;
+  line-height: 24px;
+  letter-spacing: 0;
+}
+
+@mixin P18-medium {
+  font-family: font-vars.$medium;
+  font-size: 18px;
+  line-height: 24px;
+  letter-spacing: 0;
+}
+
+@mixin P18-semibold {
+  font-family: font-vars.$semi;
+  font-size: 18px;
+  line-height: 24px;
+  letter-spacing: 0;
+}
+
+@mixin P18-bold {
+  font-family: font-vars.$bold;
+  font-size: 18px;
+  line-height: 24px;
+  letter-spacing: 0;
+}
+
+@mixin P18-extrabold {
+  font-family: font-vars.$extra-bold;
+  font-size: 18px;
+  line-height: 24px;
+  letter-spacing: 0;
+}
+
+@mixin P20-medium {
+  font-family: font-vars.$medium;
+  font-size: 20px;
+  line-height: 30px;
+  letter-spacing: 0;
+}
+
+@mixin P20-semibold {
+  font-family: font-vars.$semi;
+  font-size: 20px;
+  line-height: 30px;
+  letter-spacing: 0;
+}
+
+@mixin P20-bold {
+  font-family: font-vars.$bold;
+  font-size: 20px;
+  line-height: 30px;
+  letter-spacing: 0;
+}
+
+@mixin P24-medium {
+  font-family: font-vars.$medium;
+  font-size: 24px;
+  line-height: 30px;
+  letter-spacing: 0;
+}
+
+@mixin P24-semi {
+  font-family: font-vars.$semi;
+  font-size: 24px;
+  line-height: 30px;
+  letter-spacing: 0;
+}
+
+@mixin P24-bold {
+  font-family: font-vars.$bold;
+  font-size: 24px;
+  line-height: 30px;
+  letter-spacing: 0;
+}
+
+@mixin P26-bold {
+  font-family: font-vars.$extra-bold;
+  font-size: 26px;
+  line-height: 32px;
+  letter-spacing: 0;
+}
+
+@mixin P32-extrabold {
+  font-family: font-vars.$extra-bold;
+  font-size: 32px;
+  line-height: 48px;
+  letter-spacing: 0;
+}
