@@ -10,7 +10,8 @@ import { DestroyService } from '../../../../services/destroy/destroy.service';
     selector: 'app-root',
     templateUrl: './main-page.component.html',
     providers: [
-        DestroyService
+        DestroyService,
+        WebsocketService
     ]
 })
 export class MainPageComponent implements AfterViewInit {
