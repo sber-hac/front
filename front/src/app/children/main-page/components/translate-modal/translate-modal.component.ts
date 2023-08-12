@@ -1,4 +1,4 @@
-import { Component, HostBinding, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, HostBinding, Input } from '@angular/core';
 import { ModalBreakpointEnum } from '../../models/modal-breakpoint.enum';
 import { IonModal } from '@ionic/angular';
 
@@ -6,6 +6,7 @@ import { IonModal } from '@ionic/angular';
     selector: 'app-swipe-modal',
     templateUrl: './translate-modal.component.html',
     styleUrls: ['./styles/translate-modal.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TranslateModalComponent {
 
