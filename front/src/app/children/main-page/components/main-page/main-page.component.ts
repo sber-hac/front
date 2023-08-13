@@ -1,9 +1,7 @@
-import { AfterViewInit, ChangeDetectionStrategy, Component, Inject, OnDestroy, ViewChild } from '@angular/core';
-import { BehaviorSubject, map, switchMap, takeUntil } from 'rxjs';
+import { ChangeDetectionStrategy, Component, OnDestroy, ViewChild } from '@angular/core';
 import { RtcService } from '../../services/rtc.service';
 import { DestroyService } from '../../../../services/destroy/destroy.service';
 import { IonModal } from '@ionic/angular';
-import { MODAL_BREAKPOINT } from '../../tokens/modal-breackpoint.token';
 import { ModalBreakpointEnum } from '../../models/modal-breakpoint.enum';
 
 @Component({
@@ -14,7 +12,7 @@ import { ModalBreakpointEnum } from '../../models/modal-breakpoint.enum';
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class MainPageComponent implements AfterViewInit, OnDestroy {
+export class MainPageComponent implements OnDestroy {
 
     @ViewChild(IonModal)
     protected modal?: IonModal;
@@ -25,9 +23,7 @@ export class MainPageComponent implements AfterViewInit, OnDestroy {
 
 
     constructor(
-        protected destroy$: DestroyService,
         protected readonly rtcService: RtcService,
-        @Inject(MODAL_BREAKPOINT) protected readonly currentBreakpoint$: BehaviorSubject<ModalBreakpointEnum>,
     ) {
     }
 
@@ -37,13 +33,5 @@ export class MainPageComponent implements AfterViewInit, OnDestroy {
 
     public ngOnDestroy(): void {
         this.modal?.dismiss(undefined, 'close');
-    }
-
-    public ngAfterViewInit(): void {
-       // this.rtcService.startVideo()
-       //     .pipe(
-       //         takeUntil(this.destroy$)
-       //     )
-       //     .subscribe();
     }
 }

@@ -5,13 +5,7 @@ import { CommonModule } from '@angular/common';
 import { TranslateModalComponent } from './components/translate-modal/translate-modal.component';
 import { IonicModule } from '@ionic/angular';
 import { WelcomePageComponent } from './components/welcome-page/welcome-page.component';
-import { MODAL_BREAKPOINT } from './tokens/modal-breackpoint.token';
-import { BehaviorSubject } from 'rxjs';
-import { ModalBreakpointEnum } from './models/modal-breakpoint.enum';
-import { FittextDirective } from '../../directives/fittext.directive';
 import { LoaderComponent } from '../../components/loader/loader.component';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { AbLetModule } from '../../directives/let/let.module';
 import { LoadingComponent } from './components/loading/loading.component';
 
 const routes: Routes = [
@@ -45,16 +39,8 @@ const routes: Routes = [
         CommonModule,
         RouterModule.forChild(routes),
         IonicModule,
-        FittextDirective,
         LoaderComponent,
-        AbLetModule
     ],
-    providers: [
-        {
-            provide: MODAL_BREAKPOINT,
-            useValue: new BehaviorSubject<ModalBreakpointEnum>(ModalBreakpointEnum.small)
-        }
-    ]
 })
 export class MainPageModule {
 }

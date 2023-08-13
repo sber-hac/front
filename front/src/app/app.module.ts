@@ -4,7 +4,6 @@ import { IonicModule } from '@ionic/angular';
 import { AppComponent } from './components/app/app.component';
 import { RouterModule, Routes } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
-import { AbLetModule } from './directives/let/let.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 const routes: Routes = [
@@ -24,7 +23,6 @@ const routes: Routes = [
         RouterModule.forRoot(routes),
         IonicModule.forRoot(),
         HttpClientModule,
-        AbLetModule,
         BrowserModule,
         BrowserAnimationsModule,
     ],
