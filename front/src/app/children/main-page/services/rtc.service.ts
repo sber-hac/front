@@ -3,63 +3,64 @@ import { filter, from, fromEvent, map, Observable, switchMap, tap } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 
 function escapeRegExp(string: string) {
-  return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); // $& means the whole matched string
+    return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); // $& means the whole matched string
 }
+
 function sdpFilterCodec(kind: any, codec: any, realSdp: any) {
-  var allowed = []
-  var rtxRegex = new RegExp('a=fmtp:(\\d+) apt=(\\d+)\r$');
-  var codecRegex = new RegExp('a=rtpmap:([0-9]+) ' + escapeRegExp(codec))
-  var videoRegex = new RegExp('(m=' + kind + ' .*?)( ([0-9]+))*\\s*$')
+    var allowed = []
+    var rtxRegex = new RegExp('a=fmtp:(\\d+) apt=(\\d+)\r$');
+    var codecRegex = new RegExp('a=rtpmap:([0-9]+) ' + escapeRegExp(codec))
+    var videoRegex = new RegExp('(m=' + kind + ' .*?)( ([0-9]+))*\\s*$')
 
-  var lines = realSdp.split('\n');
+    var lines = realSdp.split('\n');
 
-  var isKind = false;
-  for (var i = 0; i < lines.length; i++) {
-    if (lines[i].startsWith('m=' + kind + ' ')) {
-      isKind = true;
-    } else if (lines[i].startsWith('m=')) {
-      isKind = false;
+    var isKind = false;
+    for (var i = 0; i < lines.length; i++) {
+        if (lines[i].startsWith('m=' + kind + ' ')) {
+            isKind = true;
+        } else if (lines[i].startsWith('m=')) {
+            isKind = false;
+        }
+
+        if (isKind) {
+            var match = lines[i].match(codecRegex);
+            if (match) {
+                allowed.push(parseInt(match[1]));
+            }
+
+            match = lines[i].match(rtxRegex);
+            if (match && allowed.includes(parseInt(match[2]))) {
+                allowed.push(parseInt(match[1]));
+            }
+        }
     }
 
-    if (isKind) {
-      var match = lines[i].match(codecRegex);
-      if (match) {
-        allowed.push(parseInt(match[1]));
-      }
+    var skipRegex = 'a=(fmtp|rtcp-fb|rtpmap):([0-9]+)';
+    var sdp = '';
 
-      match = lines[i].match(rtxRegex);
-      if (match && allowed.includes(parseInt(match[2]))) {
-        allowed.push(parseInt(match[1]));
-      }
+    isKind = false;
+    for (var i = 0; i < lines.length; i++) {
+        if (lines[i].startsWith('m=' + kind + ' ')) {
+            isKind = true;
+        } else if (lines[i].startsWith('m=')) {
+            isKind = false;
+        }
+
+        if (isKind) {
+            var skipMatch = lines[i].match(skipRegex);
+            if (skipMatch && !allowed.includes(parseInt(skipMatch[2]))) {
+                continue;
+            } else if (lines[i].match(videoRegex)) {
+                sdp += lines[i].replace(videoRegex, '$1 ' + allowed.join(' ')) + '\n';
+            } else {
+                sdp += lines[i] + '\n';
+            }
+        } else {
+            sdp += lines[i] + '\n';
+        }
     }
-  }
 
-  var skipRegex = 'a=(fmtp|rtcp-fb|rtpmap):([0-9]+)';
-  var sdp = '';
-
-  isKind = false;
-  for (var i = 0; i < lines.length; i++) {
-    if (lines[i].startsWith('m=' + kind + ' ')) {
-      isKind = true;
-    } else if (lines[i].startsWith('m=')) {
-      isKind = false;
-    }
-
-    if (isKind) {
-      var skipMatch = lines[i].match(skipRegex);
-      if (skipMatch && !allowed.includes(parseInt(skipMatch[2]))) {
-        continue;
-      } else if (lines[i].match(videoRegex)) {
-        sdp += lines[i].replace(videoRegex, '$1 ' + allowed.join(' ')) + '\n';
-      } else {
-        sdp += lines[i] + '\n';
-      }
-    } else {
-      sdp += lines[i] + '\n';
-    }
-  }
-
-  return sdp;
+    return sdp;
 }
 
 @Injectable({
@@ -81,14 +82,14 @@ export class RtcService {
             .pipe(
                 map(event => event as RTCTrackEvent),
                 filter(event => event.track.kind === 'video'),
-                map(event =>  event.streams[0])
+                map(event => event.streams[0])
             );
 
         this.audioStream$ = fromEvent(this.pc, 'track')
             .pipe(
                 map(event => event as RTCTrackEvent),
                 filter(event => event.track.kind === 'audio'),
-                map(event =>  event.streams[0])
+                map(event => event.streams[0])
             );
     }
 
@@ -149,7 +150,7 @@ export class RtcService {
                     this.pc.addEventListener('icegatheringstatechange', checkState);
                 })),
                 switchMap(() => this.makeConnection()),
-                map(answer => void this._pc.setRemoteDescription(answer))
+                map(answer => void this.pc.setRemoteDescription(answer))
             );
     }
 
@@ -167,9 +168,9 @@ export class RtcService {
         })
     }
 
-    public stop():void{
+    public stop(): void {
         if (this.pc.getTransceivers) {
-            this.pc.getTransceivers().forEach(function(transceiver) {
+            this.pc.getTransceivers().forEach(function (transceiver) {
                 if (transceiver.stop) {
                     transceiver.stop();
                 }
@@ -177,13 +178,11 @@ export class RtcService {
         }
 
         // close local audio / video
-        this.pc.getSenders().forEach(function(sender) {
-            sender.track.stop();
+        this.pc.getSenders().forEach(function (sender) {
+            sender.track?.stop();
         });
-
-        // close peer connection
-        setTimeout(function() {
-            this.pc.close();
+        setTimeout(() => {
+            this.pc.close()
         }, 500);
     }
 }
