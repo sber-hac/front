@@ -5,7 +5,7 @@ import { LetContext } from './let-context';
  директива нужна для корректной работы async
  */
 @Directive({
-    selector: '[let]',
+    selector: '[appLet]',
 })
 
 /** директива для работы с async pipe*/

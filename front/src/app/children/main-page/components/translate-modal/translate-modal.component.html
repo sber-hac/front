@@ -30,8 +30,16 @@
                 <span class="translate-modal-full__text">
                     {{ text$ | async }}
                 </span>
-                <div class="translate-modal-full__microphone">
+                <div class="translate-modal-full__microphone" (click)="onButtonClick()">
+                    <div [class.bordered]="buttonClicked"></div>
                     <img src="assets/icon/microphone.svg">
+                    <ng-container *ngIf="rtc.audioStream$ | async as stream">
+                        <audio id="video"
+                               autoplay="true"
+                               [srcObject]="stream"
+                        >
+                        </audio>
+                    </ng-container>
                 </div>
             </div>
         </div>

@@ -11,6 +11,7 @@ import { ModalBreakpointEnum } from './models/modal-breakpoint.enum';
 import { FittextDirective } from '../../directives/fittext.directive';
 import { LoaderComponent } from '../../components/loader/loader.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { AbLetModule } from '../../directives/let/let.module';
 
 const routes: Routes = [
     {
@@ -44,6 +45,7 @@ const routes: Routes = [
         IonicModule,
         FittextDirective,
         LoaderComponent,
+        AbLetModule
     ],
     providers: [
         {

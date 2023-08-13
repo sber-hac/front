@@ -1,10 +1,11 @@
-import { ChangeDetectionStrategy, Component, HostBinding, Input } from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, Component, HostBinding, Input } from '@angular/core';
 import { ModalBreakpointEnum } from '../../models/modal-breakpoint.enum';
 import { IonModal } from '@ionic/angular';
 import { animate, style, transition, trigger } from '@angular/animations';
 import { WebsocketService } from '../../../../services/websocket/websocket.service';
-import { BehaviorSubject, distinctUntilChanged, filter, scan, takeUntil } from 'rxjs';
+import { BehaviorSubject, distinctUntilChanged, filter, map, of, scan, Subject, switchMap, take, takeUntil } from 'rxjs';
 import { DestroyService } from '../../../../services/destroy/destroy.service';
+import { RtcService } from '../../services/rtc.service';
 
 @Component({
     selector: 'app-swipe-modal',
@@ -20,7 +21,8 @@ import { DestroyService } from '../../../../services/destroy/destroy.service';
         ]),
     ],
     providers: [
-        WebsocketService
+        WebsocketService,
+        RtcService
     ]
 })
 export class TranslateModalComponent {
@@ -32,6 +34,7 @@ export class TranslateModalComponent {
 
             return;
         }
+        this.buttonClicked = false;
         this.isFullScreen = value === ModalBreakpointEnum.full;
     }
 
@@ -47,10 +50,15 @@ export class TranslateModalComponent {
     @Input()
     public minimalBreakPoint: number = 0.3;
 
+    protected buttonClicked: boolean = false;
+
     protected text$: BehaviorSubject<string> = new BehaviorSubject('');
+
+    protected endStream$: Subject<void> = new Subject<void>();
 
     constructor(
         protected destroy$: DestroyService,
+        protected rtc: RtcService,
         protected websocket$: WebsocketService,
     ) {
         const obs = this.text$;
@@ -58,11 +66,34 @@ export class TranslateModalComponent {
             .pipe(
                 filter((text: string) => !!text && text !== 'нет жеста'),
                 distinctUntilChanged(),
-                scan((a, c) => a + " " + c),
+                scan((a, c) => a + ' ' + c),
                 takeUntil(this.destroy$),
             ).subscribe(obs);
     }
 
+    public onButtonClick(): void {
+        this.buttonClicked = !this.buttonClicked;
+        if (!this.buttonClicked) {
+
+            /** отправляем web-rtc */
+            this.rtc.audioStream$
+                .pipe(
+                    take(1),
+                    switchMap((value: MediaStream) => {
+                        /** послали запрос */
+                        return of(null);
+                    })
+                )
+                .subscribe();
+
+        } else {
+            this.rtc.startAudio()
+                .pipe(
+                    takeUntil(this.endStream$)
+                )
+                .subscribe();
+        }
+    }
 
     public onCrossClick(): void {
         this.modal?.setCurrentBreakpoint(this.minimalBreakPoint);

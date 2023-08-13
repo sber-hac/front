@@ -1,5 +1,12 @@
 @use 'global.master' as *;
 
+.bordered {
+    border: 3px solid #00af64;
+    border-radius: 32px;
+    width: 96px;
+    height: 96px;
+    position: absolute;
+}
 
 .translate-modal {
     display: flex;
@@ -78,8 +85,13 @@
     }
 
     &__microphone {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
         & img {
             width: 64px;
         }
     }
 }
+

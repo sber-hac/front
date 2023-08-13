@@ -69,21 +69,30 @@ export class RtcService {
 
     public readonly videoStream$: Observable<MediaStream>;
 
-    private readonly _pc: RTCPeerConnection;
+    public readonly audioStream$: Observable<MediaStream>;
+
+    public readonly pc: RTCPeerConnection;
 
     constructor(
         private readonly _http: HttpClient,
     ) {
-        this._pc = new RTCPeerConnection();
-        this.videoStream$ = fromEvent(this._pc, 'track')
+        this.pc = new RTCPeerConnection();
+        this.videoStream$ = fromEvent(this.pc, 'track')
             .pipe(
                 map(event => event as RTCTrackEvent),
                 filter(event => event.track.kind === 'video'),
                 map(event =>  event.streams[0])
             );
+
+        this.audioStream$ = fromEvent(this.pc, 'track')
+            .pipe(
+                map(event => event as RTCTrackEvent),
+                filter(event => event.track.kind === 'audio'),
+                map(event =>  event.streams[0])
+            );
     }
 
-    public start(): Observable<void> {
+    public startVideo(): Observable<void> {
         const constraints = {
             audio: false,
             video: {
@@ -96,7 +105,7 @@ export class RtcService {
             .pipe(
                 tap((stream) => {
                     stream.getTracks().forEach((track) => {
-                        this._pc.addTrack(track, stream);
+                        this.pc.addTrack(track, stream);
                     });
                 }),
                 switchMap(() => this.negotiate())
@@ -113,7 +122,7 @@ export class RtcService {
             .pipe(
                 tap((stream) => {
                     stream.getTracks().forEach((track) => {
-                        this._pc.addTrack(track, stream);
+                        this.pc.addTrack(track, stream);
                     });
                 }),
                 switchMap(() => this.negotiate())
@@ -121,31 +130,31 @@ export class RtcService {
     }
 
     private negotiate(): Observable<void> {
-        return from(this._pc.createOffer())
+        return from(this.pc.createOffer())
             .pipe(
-                switchMap(offer => from(this._pc.setLocalDescription(offer))),
+                switchMap(offer => from(this.pc.setLocalDescription(offer))),
                 switchMap(() => new Observable<void>(subscriber => {
-                    if (this._pc.iceGatheringState === 'complete') {
+                    if (this.pc.iceGatheringState === 'complete') {
                         subscriber.next();
 
                         return subscriber.complete();
                     }
                     const checkState = () => {
-                        if (this._pc.iceGatheringState === 'complete') {
-                            this._pc.removeEventListener('icegatheringstatechange', checkState);
+                        if (this.pc.iceGatheringState === 'complete') {
+                            this.pc.removeEventListener('icegatheringstatechange', checkState);
                             subscriber.next();
                             subscriber.complete();
                         }
                     };
-                    this._pc.addEventListener('icegatheringstatechange', checkState);
+                    this.pc.addEventListener('icegatheringstatechange', checkState);
                 })),
                 switchMap(() => this.makeConnection()),
                 map(answer => void this._pc.setRemoteDescription(answer))
             );
     }
 
-    private makeConnection(): Observable<RTCSessionDescriptionInit> {
-        const offer = this._pc.localDescription;
+    public makeConnection(): Observable<RTCSessionDescriptionInit> {
+        const offer = this.pc.localDescription;
 
         return this._http.post<RTCSessionDescriptionInit>('/offer', {
             sdp: sdpFilterCodec('video', 'H264/90000', offer?.sdp),
