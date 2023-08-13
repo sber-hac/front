@@ -10,12 +10,5 @@ export class WebsocketService extends WebSocketSubject<any> {
         @Inject(WEBSOCKET_CONFIG) protected config: IWebsocketConfig
     ) {
         super(config);
-        /** чтобы приходил тестовый вебсокет дата */
-        this.next({
-            event: 'bts:subscribe',
-            data: {
-                channel: 'live_trades_btcusd'
-            }
-        });
     }
 }

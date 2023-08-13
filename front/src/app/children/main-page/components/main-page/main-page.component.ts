@@ -10,7 +10,6 @@ import { ModalBreakpointEnum } from '../../models/modal-breakpoint.enum';
     providers: [
         DestroyService
     ],
-    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class MainPageComponent implements OnDestroy {
 
