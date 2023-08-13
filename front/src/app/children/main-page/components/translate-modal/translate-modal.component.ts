@@ -74,24 +74,18 @@ export class TranslateModalComponent {
     public onButtonClick(): void {
         this.buttonClicked = !this.buttonClicked;
         if (!this.buttonClicked) {
-
-            /** отправляем web-rtc */
-            this.rtc.audioStream$
-                .pipe(
-                    take(1),
-                    switchMap((value: MediaStream) => {
-                        /** послали запрос */
-                        return of(null);
-                    })
-                )
-                .subscribe();
-
+            this.endStream$.next();
+            this.endStream$.complete();
         } else {
             this.rtc.startAudio()
                 .pipe(
                     takeUntil(this.endStream$)
                 )
-                .subscribe();
+                .subscribe({
+                    complete: () => {
+                        this.rtc.stop();
+                    }
+                });
         }
     }
 
