@@ -40,10 +40,10 @@ export class MainPageComponent implements AfterViewInit, OnDestroy {
     }
 
     public ngAfterViewInit(): void {
-        this.rtcService.startVideo()
-            .pipe(
-                takeUntil(this.destroy$)
-            )
-            .subscribe();
+//        this.rtcService.startVideo()
+//            .pipe(
+//                takeUntil(this.destroy$)
+//            )
+//            .subscribe();
     }
 }

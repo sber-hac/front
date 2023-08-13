@@ -36,6 +36,19 @@ export class TranslateModalComponent {
         }
         this.buttonClicked = false;
         this.isFullScreen = value === ModalBreakpointEnum.full;
+        if (this.isFullScreen) {
+            this.rtc.startVideo()
+                .pipe(
+                    takeUntil(this.destroy$)
+                )
+                .subscribe();
+        } else {
+            this.rtc.startAudio()
+                .pipe(
+                    takeUntil(this.destroy$)
+                )
+                .subscribe();
+        }
     }
 
     @Input()
