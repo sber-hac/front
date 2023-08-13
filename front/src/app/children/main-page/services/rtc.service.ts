@@ -166,4 +166,24 @@ export class RtcService {
             }
         })
     }
+
+    public stop():void{
+        if (this.pc.getTransceivers) {
+            this.pc.getTransceivers().forEach(function(transceiver) {
+                if (transceiver.stop) {
+                    transceiver.stop();
+                }
+            });
+        }
+
+        // close local audio / video
+        this.pc.getSenders().forEach(function(sender) {
+            sender.track.stop();
+        });
+
+        // close peer connection
+        setTimeout(function() {
+            this.pc.close();
+        }, 500);
+    }
 }
