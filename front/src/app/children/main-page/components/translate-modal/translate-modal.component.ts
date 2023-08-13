@@ -25,7 +25,7 @@ import { RtcService } from '../../services/rtc.service';
         RtcService
     ]
 })
-export class TranslateModalComponent {
+export class TranslateModalComponent implements AfterViewInit {
 
     @Input()
     public set modalBreakPoint(value: ModalBreakpointEnum | undefined) {
@@ -36,18 +36,15 @@ export class TranslateModalComponent {
         }
         this.buttonClicked = false;
         this.isFullScreen = value === ModalBreakpointEnum.full;
-        if (this.isFullScreen) {
+        if (!this.isFullScreen) {
             this.rtc.startVideo()
                 .pipe(
-                    takeUntil(this.destroy$)
+                    takeUntil(this.endVideoStream$)
                 )
                 .subscribe();
         } else {
-            this.rtc.startAudio()
-                .pipe(
-                    takeUntil(this.destroy$)
-                )
-                .subscribe();
+            this.endVideoStream$.next();
+            this.endVideoStream$.complete();
         }
     }
 
@@ -67,7 +64,9 @@ export class TranslateModalComponent {
 
     protected text$: BehaviorSubject<string> = new BehaviorSubject('');
 
-    protected endStream$: Subject<void> = new Subject<void>();
+    protected endAudioStream$: Subject<void> = new Subject<void>();
+
+    protected endVideoStream$: Subject<void> = new Subject<void>();
 
     constructor(
         protected destroy$: DestroyService,
@@ -84,15 +83,23 @@ export class TranslateModalComponent {
             ).subscribe(obs);
     }
 
+    public ngAfterViewInit(): void {
+        this.rtc.startVideo()
+            .pipe(
+                takeUntil(this.endVideoStream$)
+            )
+            .subscribe();
+    }
+
     public onButtonClick(): void {
         this.buttonClicked = !this.buttonClicked;
         if (!this.buttonClicked) {
-            this.endStream$.next();
-            this.endStream$.complete();
+            this.endAudioStream$.next();
+            this.endAudioStream$.complete();
         } else {
             this.rtc.startAudio()
                 .pipe(
-                    takeUntil(this.endStream$)
+                    takeUntil(this.endAudioStream$)
                 )
                 .subscribe({
                     complete: () => {
