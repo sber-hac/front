@@ -21,6 +21,7 @@
         height: 14vh;
         display: flex;
         flex-direction: column;
+        align-items: center;
     }
 
     &__text {
@@ -49,6 +50,8 @@
 }
 
 .text-container {
+    display: flex;
+
     &__cross {
         display: flex;
         flex-direction: row-reverse;

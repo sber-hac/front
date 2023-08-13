@@ -3,7 +3,18 @@ import { ModalBreakpointEnum } from '../../models/modal-breakpoint.enum';
 import { IonModal } from '@ionic/angular';
 import { animate, style, transition, trigger } from '@angular/animations';
 import { WebsocketService } from '../../../../services/websocket/websocket.service';
-import { BehaviorSubject, distinctUntilChanged, filter, map, of, scan, Subject, switchMap, take, takeUntil } from 'rxjs';
+import {
+  BehaviorSubject,
+  distinctUntilChanged,
+  filter,
+  interval,
+  map,
+  Observable,
+  scan,
+  Subject,
+  takeUntil,
+  takeWhile,
+} from 'rxjs';
 import { DestroyService } from '../../../../services/destroy/destroy.service';
 import { RtcService } from '../../services/rtc.service';
 
@@ -22,7 +33,6 @@ import { RtcService } from '../../services/rtc.service';
     ],
     providers: [
         WebsocketService,
-        RtcService
     ]
 })
 export class TranslateModalComponent implements AfterViewInit {
@@ -37,12 +47,14 @@ export class TranslateModalComponent implements AfterViewInit {
         this.buttonClicked = false;
         this.isFullScreen = value === ModalBreakpointEnum.full;
         if (!this.isFullScreen) {
-            this.rtc.startVideo()
-                .pipe(
-                    takeUntil(this.endVideoStream$)
-                )
-                .subscribe();
+            // this.rtc.startVideo()
+            //     .pipe(
+            //         takeUntil(this.endVideoStream$)
+            //     )
+            //     .subscribe();
         } else {
+            this.hardText$.next('');
+            this._dest$.next();
             this.endVideoStream$.next();
             this.endVideoStream$.complete();
         }
@@ -64,9 +76,22 @@ export class TranslateModalComponent implements AfterViewInit {
 
     protected text$: BehaviorSubject<string> = new BehaviorSubject('');
 
+    protected hardText$: BehaviorSubject<string> = new BehaviorSubject('');
+
+    private _hardText$: Observable<string> = interval(1000)
+      .pipe(
+        takeWhile(a => a < this._text.length),
+        map((a) => this._text[a]),
+        scan((a, c) => a + ' ' + c),
+      );
+
+    private _dest$: Subject<void> = new Subject();
+
     protected endAudioStream$: Subject<void> = new Subject<void>();
 
     protected endVideoStream$: Subject<void> = new Subject<void>();
+
+    private _text: string[] = 'Каждый охотник желает знать где сидит фазан'.split(' ');
 
     constructor(
         protected destroy$: DestroyService,
@@ -96,16 +121,19 @@ export class TranslateModalComponent implements AfterViewInit {
         if (!this.buttonClicked) {
             this.endAudioStream$.next();
             this.endAudioStream$.complete();
+            this._dest$.next();
         } else {
+          const obs2 = this.hardText$;
+          this._hardText$
+            .pipe(
+              takeUntil(this._dest$),
+              takeUntil(this.destroy$),
+            ).subscribe(obs2);
             this.rtc.startAudio()
                 .pipe(
                     takeUntil(this.endAudioStream$)
                 )
-                .subscribe({
-                    complete: () => {
-                        this.rtc.stop();
-                    }
-                });
+                .subscribe();
         }
     }
 

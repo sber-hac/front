@@ -3,7 +3,9 @@
         <div class="translate-modal__text-container" #host>
             <span class="translate-modal__text">
                 {{ text$ | async }}
+                <app-dots-loading></app-dots-loading>
             </span>
+
         </div>
         <div class="translate-modal__icon-container">
             <div>
@@ -28,7 +30,10 @@
             </div>
             <div class="translate-modal-full__bottom">
                 <span class="translate-modal-full__text">
-                    {{ text$ | async }}
+                      <ng-container *ngIf="hardText$ | async as t">
+                        {{ t  }}
+                      </ng-container>
+                      <app-dots-loading *ngIf="buttonClicked"></app-dots-loading>
                 </span>
                 <div class="translate-modal-full__microphone" (click)="onButtonClick()">
                     <div [class.bordered]="buttonClicked"></div>
